@@ -18,6 +18,7 @@
 
 | 目录 | 职责 |
 |------|------|
+| `raw/` | 只读原始资料（论文、文章、视频转录、笔记等） |
 | `wiki/` | 项目知识层（概念、架构、模块、决策、摘要） |
 | `specs/active/` | 当前任务 spec |
 | `specs/archive/` | 已完成 spec |
@@ -28,6 +29,7 @@
 | `scripts/` | 自动化脚本 |
 | `workflows/` | 操作流程文档 |
 | `.claude/` | harness（rules/skills/hooks） |
+| `.obsidian/` | Obsidian vault 配置 + wiki 页面模板 |
 
 ## 两个闭环
 
@@ -43,13 +45,24 @@ raw/ → ingest → wiki/ → query → promote → wiki/
 spec → plan → implement → test → validate → archive
 ```
 
+## 自动化保障（Hooks）
+
+| 时机 | 检查内容 | 脚本 |
+|------|---------|------|
+| PreToolUse（Edit/Write） | 拦截 raw/ 写入 | `scripts/check_raw_write.py` |
+| PostToolUse（Edit/Write） | Wiki 结构快速检查 | `scripts/lint_wiki.py --quick` |
+| Stop | Wiki index/log 同步检查 | `scripts/check_index_log_sync.py` |
+| Stop | 任务完整性验证 | `scripts/validate_task.py` |
+
 ## 常用命令
 
 | 命令 | 用途 |
 |------|------|
-| `python3 scripts/lint_wiki.py` | Wiki 结构检查 |
-| `python3 scripts/sync_index.py` | 同步 index 页面计数 |
-| `python3 scripts/validate_task.py` | 任务完成验证 |
+| `python scripts/lint_wiki.py` | Wiki 结构检查 |
+| `python scripts/sync_index.py` | 同步 index 页面计数 |
+| `python scripts/validate_task.py` | 任务完成验证 |
+| `python scripts/scrape.py <URL>` | Firecrawl 网页抓取到 raw/ |
+| `python scripts/transcribe.py <文件>` | Whisper 音视频转录到 raw/ |
 
 ## 完成标准
 
