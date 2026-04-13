@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+> **Hub**: `D:\Claude\Ohmybrain` — 跨项目知识中心（查询领域知识/回流结论用 `/promote-answer`）
+> **模板**: `D:\Claude\ohmybrain-core` — 项目模板源
+
 ## 项目名称
 
 （从 ohmybrain-core 模板派生，请替换为实际项目名）
