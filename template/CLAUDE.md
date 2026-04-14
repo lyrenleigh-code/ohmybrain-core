@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-> **Hub**: `D:\Claude\Ohmybrain` — 跨项目知识中心（查询领域知识/回流结论用 `/promote-answer`）
+> **Hub**: `D:\Claude\Ohmybrain` — 跨项目知识中心（查询领域知识/回流结论用 `/promote`）
 > **模板**: `D:\Claude\ohmybrain-core` — 项目模板源
 
 ## 项目名称
@@ -19,33 +19,33 @@
 
 ## 目录地图
 
-| 目录 | 职责 |
-|------|------|
-| `raw/` | 只读原始资料（论文、文章、视频转录、笔记等） |
-| `wiki/` | 项目知识层（概念、架构、模块、决策、摘要） |
-| `specs/active/` | 当前任务 spec |
-| `specs/archive/` | 已完成 spec |
-| `plans/` | 实现计划 |
-| `src/` | 源代码 |
-| `tests/` | 自动化测试 |
-| `evals/` | 评测 |
-| `scripts/` | 自动化脚本 |
-| `workflows/` | 操作流程文档 |
-| `.claude/` | harness（rules/skills/hooks） |
-| `.obsidian/` | Obsidian vault 配置 + wiki 页面模板 |
+| 目录               | 职责                            |
+| ---------------- | ----------------------------- |
+| `raw/`           | 只读原始资料（论文、文章、视频转录、笔记等）        |
+| `wiki/`          | 项目知识层（概念、架构、模块、决策、摘要）         |
+| `specs/active/`  | 当前任务 spec                     |
+| `specs/archive/` | 已完成 spec                      |
+| `plans/`         | 实现计划                          |
+| `src/`           | 源代码                           |
+| `tests/`         | 自动化测试                         |
+| `evals/`         | 评测                            |
+| `scripts/`       | 自动化脚本                         |
+| `workflows/`     | 操作流程文档                        |
+| `.claude/`       | harness（rules/skills/hooks）   |
+| `.obsidian/`     | Obsidian vault 配置 + wiki 页面模板 |
 
 ## 两个闭环
 
 ### 知识闭环
 
 ```
-raw/ → ingest → wiki/ → query → promote → wiki/
+raw/ → /ingest → wiki/ → query → /promote → Ohmybrain Hub wiki/
 ```
 
 ### 开发闭环
 
 ```
-spec → plan → implement → test → validate → archive
+01-spec → 02-plan → 03-implement(产出三件套) → 04-validate(验证+同步+归档+commit)
 ```
 
 ## 自动化保障（Hooks）
