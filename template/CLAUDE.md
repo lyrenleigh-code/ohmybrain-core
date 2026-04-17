@@ -67,6 +67,23 @@ raw/ → /ingest → wiki/ → query → /promote → Ohmybrain Hub wiki/
 | `python scripts/scrape.py <URL>` | Firecrawl 网页抓取到 raw/ |
 | `python scripts/transcribe.py <文件>` | Whisper 音视频转录到 raw/ |
 
+## Hook Exit Code Strategy
+
+所有 `scripts/*.py` hook 脚本遵循 Claude Code 的 exit code 契约：
+
+| Exit | 含义 | 触发效果 |
+|------|------|---------|
+| **0** | 成功 / 优雅放行 | 继续执行，stdout 可见 |
+| **1** | 非阻断错误 | stderr 显示给用户，继续执行 |
+| **2** | 阻断错误 | stderr 喂回 Claude 处理，阻止工具调用 |
+
+**设计原则**：
+
+- **宽松优先**：hook 遇未知输入应 `exit 0` 放行，不阻断无关场景
+- **阻断谨慎**：只在安全性/一致性被破坏时 `exit 2`（如 `check_raw_write.py` / `check_private_tags.py` / `check_index_log_sync.py`）
+- **提醒用 0 + stdout**：非致命的"顺手提示"不用 exit 1/2，避免打断工作流
+- **Windows 注意**：Windows Terminal 下大量非 0 exit 可能导致 tab 累积
+
 ## 完成标准
 
 - 代码变更已完成
