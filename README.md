@@ -201,4 +201,4 @@ raw/ ──► /ingest ──► wiki/source-summaries/ ──► query ──�
 
 ## 许可
 
-模板与脚本可自由复用。`template/` 下示例内容仅供参考。
+内部项目，仅供本人 + 授权内部协作者使用。
