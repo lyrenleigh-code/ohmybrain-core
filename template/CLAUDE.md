@@ -5,7 +5,20 @@
 
 ## 项目名称
 
-（从 ohmybrain-core 模板派生，请替换为实际项目名）
+{{PROJECT_NAME}} — {{PROJECT_DESCRIPTION}}
+
+<!--
+占位符清单（scaffold 时替换）：
+- {{PROJECT_NAME}}         项目全名，如 UWAnet
+- {{PROJECT_SLUG}}         小写短名，如 uwanet
+- {{PROJECT_DESCRIPTION}}  一句话描述
+- {{DEPENDS_ON}}           依赖项目（可多，逗号分隔）
+验证：! grep -qE "\{\{[A-Z_]+\}\}" CLAUDE.md && echo "placeholders: OK"
+-->
+
+## 关联项目
+
+- 依赖：{{DEPENDS_ON}}
 
 ## 不可违反的规则
 
@@ -53,9 +66,23 @@ raw/ → /ingest → wiki/ → query → /promote → Ohmybrain Hub wiki/
 | 时机 | 检查内容 | 脚本 |
 |------|---------|------|
 | PreToolUse（Edit/Write） | 拦截 raw/ 写入 | `scripts/check_raw_write.py` |
+| PreToolUse（Edit/Write） | 拦截 `<private>` 标签外泄到 wiki/ 等公开路径 | `scripts/check_private_tags.py` |
 | PostToolUse（Edit/Write） | Wiki 结构快速检查 | `scripts/lint_wiki.py --quick` |
 | Stop | Wiki index/log 同步检查 | `scripts/check_index_log_sync.py` |
 | Stop | 任务完整性验证 | `scripts/validate_task.py` |
+
+## 闭环模式（可选）
+
+若本项目适合**自主新建项目闭环**（一行目标 → Phase 0-6 到 M1 真装机），模板自带驱动套件：
+
+- `prompts/goal.yaml.tpl` — 闭环权威驱动（Phase 0 人工填）
+- `prompts/planner.md` / `prompts/evaluator.md` — agent prompt
+- `prompts/README.md` — 使用说明
+- `.claude/settings.local.json.example` — 闭环模式 Bash 白名单（**启动前必复制为 `settings.local.json`**）
+
+方法论全文：`D:/Claude/Ohmybrain/wiki/explorations/autonomous-new-project-workflow.md`
+
+完整参考实例（UWAnet 首例，2026-04-21）：`D:/Claude/Ohmybrain/projects/uwanet/prompts/goal.yaml`
 
 ## 常用命令
 

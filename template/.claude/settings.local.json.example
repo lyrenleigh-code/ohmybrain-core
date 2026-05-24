@@ -1,0 +1,38 @@
+{
+  "_comment": "闭环模式专用 Bash 白名单 — 解决 Pitfall #7（Subagent 运行时 Bash 拦截）。复制为 settings.local.json 激活。说明见 prompts/README.md §Phase 1。",
+  "permissions": {
+    "allow": [
+      "Bash(bash -n *)",
+      "Bash(python -m py_compile *)",
+      "Bash(python tests/**)",
+      "Bash(python3 tests/**)",
+      "Bash(python -c *)",
+      "Bash(python3 -c *)",
+      "Bash(grep *)",
+      "Bash(wc *)",
+      "Bash(ls *)",
+      "Bash(find * -type f*)",
+      "Bash(find * -type d*)",
+      "Bash(find * -name*)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(cat * | grep *)",
+      "Bash(cat */*.md)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(apt *)",
+      "Bash(apt-get *)",
+      "Bash(yum *)",
+      "Bash(rm -rf *)",
+      "Bash(git push *)",
+      "Bash(git push --force *)",
+      "Bash(git reset --hard *)",
+      "Bash(make *)",
+      "Bash(./ns3 build*)",
+      "Bash(cargo build*)",
+      "Bash(npm install*)",
+      "Bash(pip install*)"
+    ]
+  }
+}
