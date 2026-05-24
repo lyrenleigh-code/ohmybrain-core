@@ -1,6 +1,44 @@
 # 新项目启动 SOP
 
-## 0. 先选启动模式
+## 0. 先选项目类型（决定派生哪个模板）
+
+ohmybrain-core 提供 **3 类模板**，按项目主交付物选择：
+
+| 项目类型 | 主交付物 | 模板目录 | 派生位置 | 例 |
+|---------|---------|---------|---------|---|
+| **engineering** | 算法代码（.m/.py/.cpp） | `template-engineering/` | `D:\Claude\TechReq\<name>/` | UWAcomm / USBL |
+| **document** | docx / pdf 报告 🔒 | `template-document/` | `D:\Claude\DocProcess\<name>/` | UWAprojDoc / Pricing |
+| **tool** | 可复用 skill / template | `template-tool/` | `D:\Claude\Tools\<name>/` | FlowGen / AnthropicPPT |
+
+**决策树**：
+
+```
+你要做什么？
+├── 写算法代码 / 跑仿真             → template-engineering
+├── 写文档 / 方案 / 报告（docx）  → template-document（默认私人 🔒）
+└── 做工具 / 开发可复用 skill      → template-tool
+```
+
+三类模板的详细差异见 `D:\Claude\Ohmybrain\wiki\architecture\project-types.md`。
+
+### 派生命令
+
+```bash
+# Engineering (实际开发)
+cp -r D:\Claude\ohmybrain-core\template-engineering\  →  D:\Claude\TechReq\<新项目>\
+
+# Document (文档撰写, 默认私人 🔒)
+cp -r D:\Claude\ohmybrain-core\template-document\  →  D:\Claude\DocProcess\<新项目>\
+
+# Tool (工具开发)
+cp -r D:\Claude\ohmybrain-core\template-tool\  →  D:\Claude\Tools\<新项目>\
+```
+
+派生后填占位符 `{{PROJECT_NAME}}` / `{{DEPENDS_ON}}` 即可。
+
+---
+
+## 1. 先选启动模式
 
 **本 SOP 有两条路径**，动手前先选：
 
