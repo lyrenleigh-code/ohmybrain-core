@@ -96,7 +96,7 @@ cp template/.gitignore       新项目/
 2. 拷贝 template/ 到目标路径
 3. 填 CLAUDE.md 项目特有部分（slug / 路径 / 关联项目 / 启动模式）
 4. （可选）填 prompts/goal.yaml 启用自主新建项目闭环
-5. git init + 创建 GitHub/GitLab 远端
+5. `git init -b main` + 创建 GitHub/GitLab 远端（默认主分支统一为 `main`）
 6. 第一次 commit + push 双推
 ```
 

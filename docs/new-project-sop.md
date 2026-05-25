@@ -159,10 +159,12 @@ mkdir -p raw/seed prompts .checkpoint
 
 ```bash
 cd D:\Claude\TechReq\新项目名
-git init
+git init -b main                # 默认主分支用 main（2026-05-25 起统一）
 git add .
 git commit -m "init: 从 ohmybrain-core 模板初始化"
 ```
+
+> **分支命名约定**（2026-05-25 统一）：所有新项目默认主分支为 `main`，不再用 `master`。已派生的老项目按需迁移，UWAcomm 因 11 feat/fix 分支待 merge 暂缓。
 
 ### 4. 注册到 Ohmybrain Hub
 
