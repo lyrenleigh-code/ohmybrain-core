@@ -9,17 +9,33 @@
 ## 三仓架构
 
 ```
-ohmybrain-core（本仓库 / 母仓 / 模板）
-  │
-  ├──派生──► UWAcomm（水声通信仿真）
+ohmybrain-core（本仓库 / 母仓 / 模板，2026-05-24 三模板拆分）
+  ├── template-engineering/   → 派生工程项目（TechReq/*）
+  ├── template-document/      → 派生文档项目（DocProcess/*）
+  └── template-tool/          → 派生工具项目（Tools/*）
+
+派生项目（按类别分组）：
+
+TechReq/（template-engineering 派生）：
+  ├──派生──► UWAcomm（水声通信仿真，6 体制）
   ├──派生──► USBL（超短基线自定位）
   ├──派生──► UWAnet（组网协议仿真）
-  ├──派生──► UWAcomm_usbl 🔒（联合仿真，内网）
-  ├──派生──► FlowGen 🔒（Mermaid 流程图工具）
-  └──派生──► Pricing 🔒（文档处理）
+  └──派生──► UWAcomm_usbl 🔒（联合仿真，内网）
+
+Tools/（template-tool 派生）：
+  ├──派生──► FlowGen 🔒（Mermaid + Visio 流程/架构图工具）
+  └──派生──► AnthropicPPT 🔒（FIELDBOOK PPT 模板套件，2026-05-23）
+
+DocProcess/（template-document 派生，全私人）：
+  ├──派生──► Pricing 🔒（军用四号文报价）
+  ├──派生──► UWAprojDoc 🔒（水声专项方案文档，非 git）
+  ├──派生──► CooperativeDetection 🔒（4 专题 12 课题方案，非 git）
+  ├──派生──► PaperReview 🔒（学位论文外审，非 git）
+  ├──派生──► DigitalTwinGuide 🔒（数字孪生方法论，非 git）
+  └──派生──► DigitalTwin1plusN 🔒（1+N 集群数字孪生，非 git）
 
 ohmybrain（知识库 + Hub）
-  └── 跨项目知识沉淀（concepts / entities / explorations）
+  └── 跨项目知识沉淀（concepts / entities / architecture / topics / source-summaries）
 ```
 
 **三层职责**：
@@ -34,22 +50,30 @@ ohmybrain（知识库 + Hub）
 
 ---
 
-## 模板内容
+## 模板内容（三模板，2026-05-24 拆分）
+
+### 共性目录（三模板均含）
 
 | 目录 | 内容 |
 |------|------|
-| `template/.claude/rules/` | 4 条路径规则（wiki / raw / engineering / specs） |
-| `template/.claude/skills/` | 5 个技能（ingest / plan / implement / lint / promote） |
-| `template/.claude/commands/` | Slash commands（`/ingest`, `/promote`） |
-| `template/.claude/settings.json` | Python 跨平台 hooks（Pre / Post / Stop） |
-| `template/.obsidian/` | Obsidian vault 配置 + 5 个 wiki 页面模板 |
-| `template/raw/` | 只读原始资料层（10 个子目录骨架） |
-| `template/wiki/` | 知识层（index.md + log.md + concept/entity/architecture 模板） |
-| `template/workflows/knowledge/` | 知识闭环 4 步（ingest → query → promote → review） |
-| `template/workflows/engineering/` | 开发闭环 4 步（spec → plan → implement → validate） |
-| `template/scripts/` | 7+ 个自动化脚本 |
-| `template/.github/workflows/` | CI + wiki-check |
-| `template/prompts/` | 自主新建项目闭环驱动套件（goal.yaml.tpl / planner / evaluator） |
+| `<template>/.claude/rules/` | 路径规则（wiki / raw / specs 等） |
+| `<template>/.claude/skills/` | 通用技能（ingest / plan / implement / lint / promote） |
+| `<template>/.claude/commands/` | Slash commands（`/ingest`, `/promote`） |
+| `<template>/.claude/agents/` | 通用 agents（如 wiki-ingester，2026-05-24 下沉） |
+| `<template>/.claude/settings.json` | Python 跨平台 hooks（Pre / Post / Stop） |
+| `<template>/.obsidian/` | Obsidian vault 配置 + wiki 页面模板 |
+| `<template>/raw/` | 只读原始资料层 |
+| `<template>/wiki/` | 知识层（index.md + log.md + concept/entity/architecture 模板） |
+| `<template>/scripts/` | 自动化脚本（lint / sync / hooks 等 7+ 个） |
+| `<template>/prompts/` | 自主新建项目闭环驱动套件（可选） |
+
+### 三模板差异
+
+| 模板 | 派生目标 | 特有目录 |
+|------|---------|----------|
+| **template-engineering/** | `TechReq/*`（算法/仿真） | `src/` + `tests/` + `evals/` + `workflows/engineering/`（spec → plan → implement → validate 4 步） |
+| **template-document/** | `DocProcess/*`（文档撰写，私人） | `output/` 占位 + `workflows/document/`（4 步：spec → draft → validate → archive）；CLAUDE.md 强调私人约束 |
+| **template-tool/** | `Tools/*`（CLI / skill 工具） | `templates/` + `output/sample/` + `workflows/tool/`（5 步：design → implement → test → register-skill → docs） |
 
 ---
 
@@ -70,19 +94,23 @@ ohmybrain（知识库 + Hub）
 
 ## 使用方式
 
-### 方式 A：直接复制目录（旧方法）
+### 方式 A：直接复制目录（旧方法，按项目类型选模板）
 
 ```bash
-cp -r template/.claude       新项目/
-cp -r template/.obsidian     新项目/
-cp -r template/.github       新项目/
-cp -r template/wiki          新项目/
-cp -r template/raw           新项目/
-cp -r template/scripts       新项目/
-cp -r template/workflows     新项目/
-cp -r template/prompts       新项目/
-cp template/CLAUDE.md        新项目/
-cp template/.gitignore       新项目/
+# 三模板任选其一（按项目分类）：
+TEMPLATE=template-engineering   # 算法/仿真项目
+# TEMPLATE=template-document    # 文档撰写项目（私人）
+# TEMPLATE=template-tool        # CLI / skill 工具
+
+cp -r $TEMPLATE/.claude       新项目/
+cp -r $TEMPLATE/.obsidian     新项目/
+cp -r $TEMPLATE/wiki          新项目/
+cp -r $TEMPLATE/raw           新项目/
+cp -r $TEMPLATE/scripts       新项目/
+cp -r $TEMPLATE/workflows     新项目/
+cp -r $TEMPLATE/prompts       新项目/
+cp $TEMPLATE/CLAUDE.md        新项目/
+cp $TEMPLATE/.gitignore       新项目/
 ```
 
 修改 `CLAUDE.md` 中的项目名称、目录地图、Hub 引用。
@@ -93,7 +121,7 @@ cp template/.gitignore       新项目/
 
 ```
 1. 在 ohmybrain（Hub）的 projects/<slug>/ 下建占位
-2. 拷贝 template/ 到目标路径
+2. 按项目类别拷贝 template-engineering / template-document / template-tool 到目标路径
 3. 填 CLAUDE.md 项目特有部分（slug / 路径 / 关联项目 / 启动模式）
 4. （可选）填 prompts/goal.yaml 启用自主新建项目闭环
 5. `git init -b main` + 创建 GitHub/GitLab 远端（默认主分支统一为 `main`）
@@ -104,9 +132,9 @@ cp template/.gitignore       新项目/
 
 适合"一行目标 → Phase 0-6 → M1 真装机"的场景：
 
-- `template/prompts/goal.yaml.tpl` — 闭环权威驱动（Phase 0 人工填）
-- `template/prompts/planner.md` / `template/prompts/evaluator.md` — agent prompt
-- `template/.claude/settings.local.json.example` — 闭环模式 Bash 白名单
+- `<template>/prompts/goal.yaml.tpl` — 闭环权威驱动（Phase 0 人工填，三模板均含）
+- `<template>/prompts/planner.md` / `<template>/prompts/evaluator.md` — agent prompt
+- `<template>/.claude/settings.local.json.example` — 闭环模式 Bash 白名单
 
 方法论全文：[`autonomous-new-project-workflow`](https://github.com/lyrenleigh-code/Ohmybrain/blob/main/wiki/explorations/autonomous-new-project-workflow.md)
 
@@ -175,18 +203,36 @@ raw/ ──► /ingest ──► wiki/source-summaries/ ──► query ──�
 
 ---
 
-## 派生项目状态
+## 派生项目状态（2026-05-25）
+
+### template-engineering 派生
 
 | 项目 | 派生时间 | 路径 | 状态 |
 |------|----------|------|------|
-| UWAcomm | 早期 | `D:\Claude\TechReq\UWAcomm` | 🟢 活跃（14 模块 / 6 体制） |
-| USBL | 早期 | `D:\Claude\TechReq\USBL` | 🟢 活跃（19 模块 / 4 线） |
-| UWAnet | 早期 | `D:\Claude\TechReq\UWAnet` | 🟡 调研 |
-| UWAcomm_usbl 🔒 | 2026-04-25 | `D:\Claude\TechReq\UWAcomm_usbl` | 🟢 起步（M0-M1） |
-| FlowGen 🔒 | 2026-04-23 | `D:\Claude\Tools\FlowGen` | 🟡 起步 |
-| Pricing 🔒 | 早期 | `D:\Claude\DocProcess\Pricing` | 🟢 私人 |
+| UWAcomm | 早期 | `D:\Claude\TechReq\UWAcomm` | 🟢 活跃（14 模块 / 6 体制 / 286 commits） |
+| USBL | 早期 | `D:\Claude\TechReq\USBL` | 🟢 活跃（19 模块 / 4 线 / D-OQ-X 跨项目回流） |
+| UWAnet | 早期 | `D:\Claude\TechReq\UWAnet` | 🟡 Phase 1（M0+M1 装机三件套已 push） |
+| UWAcomm_usbl 🔒 | 2026-04-25 | `D:\Claude\TechReq\UWAcomm_usbl` | 🟢 活跃（V0.8 大纲 / 整机原型） |
 
-🔒 = 内网 GitLab Internal 可见，不公开。
+### template-tool 派生
+
+| 项目 | 派生时间 | 路径 | 状态 |
+|------|----------|------|------|
+| FlowGen 🔒 | 2026-04-23 | `D:\Claude\Tools\FlowGen` | 🟢 活跃（7 skill 实装 / Visio + Mermaid 双模式） |
+| AnthropicPPT 🔒 | 2026-05-23 | `D:\Claude\Tools\AnthropicPPT` | 🟡 起步（design_tokens + helpers 已就绪，layouts/ 待封装） |
+
+### template-document 派生（全私人）
+
+| 项目 | 派生时间 | 路径 | 状态 |
+|------|----------|------|------|
+| Pricing 🔒 | 早期 | `D:\Claude\DocProcess\Pricing` | 🟢 私人活跃（git）|
+| UWAprojDoc 🔒 | 2026-04-28 | `D:\Claude\DocProcess\UWAprojDoc` | 🟢 v17 final（非 git）|
+| CooperativeDetection 🔒 | 2026-05-08 | `D:\Claude\DocProcess\CooperativeDetection` | 🟢 活跃（非 git）|
+| PaperReview 🔒 | 2026-05-09 | `D:\Claude\DocProcess\PaperReview` | 🟢 活跃（非 git）|
+| DigitalTwinGuide 🔒 | 2026-05-13 | `D:\Claude\DocProcess\DigitalTwinGuide` | 🟢 首版完成（非 git）|
+| DigitalTwin1plusN 🔒 | 2026-05-25 | `D:\Claude\DocProcess\DigitalTwin1plusN` | 🟡 起步（非 git，新派生）|
+
+🔒 = 内网 GitLab Internal 可见或本地私人，不公开。所有 git 远端项目主分支统一为 `main`（2026-05-25 完成迁移，UWAcomm 同步）。
 
 ---
 
